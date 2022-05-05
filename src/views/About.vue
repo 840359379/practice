@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import people from '../assets/people.js'
+import people from '../assets/js/people.js'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import httpRequest from '../config/request'
 

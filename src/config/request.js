@@ -1,4 +1,6 @@
 import axios from 'axios'
+import store from '@/store'
+import router from '@/router'
 
 axios.defaults.baseURL='/api'
 
@@ -19,6 +21,9 @@ const service = axios.create({
 service.interceptors.request.use(
 	function (config) {
 		// 在发送请求之前做些什么
+		if (store.state.token) {
+            config.headers['token'] = window.sessionStorage.getItem("token")
+        }
 		return config
 	},
 	function (error) {
@@ -36,6 +41,9 @@ service.interceptors.response.use(
 		// 对响应数据做点什么
 		// dataAxios 是 axios 返回数据中的 data
 		const dataAxios = response.data
+		if(dataAxios.code == 401) {
+			router.push('/login');
+		}
 		// 这个状态码是和后端约定的
 		// const code = dataAxios.reset
 		return dataAxios

@@ -4,24 +4,32 @@ import First from '../views/First.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/first'
+    redirect: '/login'
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path:'/login',
+    name: 'Login',
+    component:() => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
     path: '/first',
     name: 'First',
-    component:First
-  },
-  {
-    path:'/index',
-    name: 'Index',
-    component:() => import(/* webpackChunkName: "about" */ '../views/Index.vue')
+    component:First,
+    meta: {
+      requireAuth: true
+    },
+    children:[
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      },
+    ]
   }
-]
+  
+];
+
+
 
 const router = createRouter({
   history: createWebHashHistory(),
